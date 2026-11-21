@@ -1,0 +1,568 @@
+
+Virtualization 
+
+Virtualization is the process of creating multiple virtual machines using a 
+hypervisor
+
+Hypervisor  
+
+A hypervisor is software that allows us to create multiple virtual machines.  
+
+Advantages of Virtualization  
+
+1) Reduced capital and operating costs.  
+2) Minimized or eliminated downtime.  
+3) Increased IT productivity and efficiency.  
+
+Disadvantages of Virtualization  
+
+1) It takes time.  
+2) Wastage of resources.  
+3) Software/applications that run in one environment may not run in another environment.  
+
+Types of Virtualization  
+
+1) Desktop Virtualization  
+2) Application Virtualization  
+3) Server Virtualization  
+4) Storage Virtualization  
+5) Network Virtualization  
+6) OS Virtualization  
+7) Hardware Virtualization  
+
+Types of Hypervisors  
+
+- Type 1 Hypervisor
+ (Also called a bare-metal hypervisor)  
+- Type 2 Hypervisor  
+
+
+Type 1 Hypervisor 
+
+If hypervisor software is directly installed on hardware, it is called a Type 1 hypervisor.
+
+For a Type 1 hypervisor, an OS is needed.  
+
+Examples:  
+1. VMware ESXi  
+2. KVM (Kernel-Based VM)  
+3. Xen  
+
+Type 2 Hypervisor
+
+If hypervisor software is installed on an operating system (OS), it is called a Type 2 hypervisor.
+
+For a Type 2 hypervisor, an OS is needed.  
+
+Example:
+- Oracle VirtualBox  
+
+======================  
+
+Docker
+
+Docker is an open platform for developing, shipping, and running applications.  
+
+It is an open-source software platform used to create, deploy, and manage virtualized application containers on a common operating system (OS). 
+
+Docker was developed in 2013.
+
+Docker is used to run containers.
+
+Container
+
+A container is a runnable instance of an image.  
+
+It is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.  
+
+Containers are lightweight and contain everything needed to run an application, so we don’t need to rely on what is currently installed on the host.  
+
+A container is a fully packaged and portable computing environment. Everything an application needs to run, such as binaries, libraries, configuration files, and dependencies, is encapsulated and isolated within the container.  
+
+We can create, start, stop, move, or delete a container using the Docker API or CLl.  
+
+Containers are isolated from each other.  
+
+======================  
+
+Docker Registries
+
+Docker images are stored in a Docker registry.  
+
+There are two types of registries:  
+- Public registry
+- Private registry
+
+Docker Hub is a public registry that anyone can use.  
+
+- When we use the docker pull command, the required images are pulled from the registry.  
+- When we use the docker push command, the required images are pushed to the registry.  
+
+======================  
+
+Advantages of Docker 
+
+1) No pre-allocation of RAM.  
+2) Lower cost.  
+3) Lightweight.  
+4) Takes very little time to create containers.  
+5) We can reuse images.  
+
+Disadvantages of Docker  
+
+1) Docker is not suitable for applications that require a rich GUI.  
+2) Difficult to manage a large number of containers. 
+3) Docker does not support cross-platform compatibility. If an application is designed to run in a Docker container on Windows, it cannot run on Linux, and vice versa.  
+4) Docker is only suitable when the developer’s OS and tester’s OS are the same. If the OS is different, a VM is required.  
+
+======================  
+
+A developer writes code in a Dockerfile.  
+
+A Dockerfile contains all dependencies and software required to run an application.  
+For example, it may specify that:  
+- The container should have Red Hat OS.  
+- Git should be installed.  
+- Certain files and directories should be present.  
+
+When we run this Dockerfile on the Docker engine, it creates an image, and from that image, it creates a container.  
+
+We can upload this image to Docker Hub (registry).
+
+=======================================
+
+Installation of Docker  
+
+To install Docker: 
+yum install -y docker
+
+To check the Docker version: 
+docker --version
+(OR)  
+docker -v
+
+To check the status of Docker: 
+systemctl status docker
+
+To start Docker:
+systemctl start docker
+
+Go to Docker Hub → Explore → (You can see multiple Docker images here)  
+
+To list all images:  
+docker images
+(OR)  
+docker image ls
+
+To pull an image from Docker Hub: 
+docker pull <image-name> 
+
+Example:  
+docker pull ubuntu
+docker pull centos
+
+To pull a specific version of an image:  
+docker pull ubuntu:22.04
+
+To list running containers:  
+docker ps
+(OR)  
+docker container ls
+
+To list all containers (including stopped ones):
+docker ps -a
+(OR)  
+docker container ls -a
+
+To create a container from an image:  
+docker run <image-name>
+(The container will be in a stopped state.)  
+Example:  
+docker run ubuntu
+
+To create/run a container from a specific image version:
+docker run <image-name>:<tag>
+(The container will be in a stopped state.)  
+Example:  
+docker run ubuntu:20.04
+
+We can create multiple containers using the same image.  
+
+To delete an image: 
+docker rmi <image-name> 
+(OR) 
+docker rmi -f <image-name>  
+Example:  
+docker rmi ubuntu
+(OR) 
+docker rmi -f ubuntu
+
+(If we delete an image, it does not affect existing containers.)  
+
+To delete a stopped container:
+docker rm <container-id>
+docker container rm <container-id>
+
+To delete a running or stopped container:
+docker rm -f <container-id>
+
+To delete multiple containers: 
+docker rm -f <container-id-1> <container-id-2>
+
+To delete all stopped containers and images: 
+docker system prune -a -f
+
+To create and enter a container:
+docker run -it <image-name> bash
+Example:  
+docker run -it ubuntu bash
+
+To exit from the container:
+exit
+(OR)  
+Ctrl + d
+(The container will be in a stopped state.)  
+
+To detach from the container (keep it running): 
+Ctrl + p + q
+(The container will remain in a running state.)  
+
+To start a container:
+docker start <container-id>
+(OR)  
+docker container start <container-id>
+
+To stop a container:  
+docker stop <container-id>
+(OR)  
+docker container stop <container-id>
+
+To stop multiple containers:  
+docker stop <container-id> <container-id>
+
+To enter a running container: 
+(Container must be in a running state.)   
+
+docker attach <container-id>
+
+==================
+
+To rename exiting container
+docker rename old-container-name new-conrainer-name
+
+To create container with custom name 
+docker run --name containername -it imagename bash
+docker run --name container1 -it ubuntu bash
+
+====================
+
+To sync a directory on the Linux machine with a directory inside the container.
+
+docker run -itv /machine-dir:/container-dir ubuntu
+
+=====================
+
+To install the httpd webserver on Amazon Linux 6.1 AMI:
+
+yum install -y httpd
+
+systemctl start httpd
+
+chkconfig httpd on
+
+echo "data" > /var/www/html/index.html
+
+Open port number 80 in the security group.
+
+Enter the public IP of the machine in the browser.
+
+===================
+
+Docker port Expose/mapping/binding
+
+docker run -itp 80:80 ubuntu
+docker exec -it container-id bash
+
+apt-get update -y
+apt-get install apache2 -y
+service apache2 start
+cat > /var/www/html/index.html
+
+===================
+
+To sync a Linux machine directory with a container directory and to perform port mapping
+
+docker run -itp 80:80 -v Linux_machine_dirname:container_dirname imagename bash
+
+===================
+
+To see cpu & mem utilization by container
+docker stats container-id
+
+To see information about containers
+docker info
+
+To see container logs
+docker logs -f container-id
+
+================
+
+To create a container from an image
+docker run -it image_name bash
+
+To create an image from a container
+docker commit container_id image_name
+
+================
+
+Dockerfile
+
+A Dockerfile is a simple text file that contains a set of instructions.
+
+The name of the file should be Dockerfile (with a capital D).
+Command to open the file:
+
+vim Dockerfile
+
+Component names should be written in capital letters.
+
+Components of a Dockerfile:
+
+1) FROM
+   Specifies the base image to be downloaded from Docker Hub.
+
+2) MAINTAINER
+   Defines the author or owner of the Dockerfile.
+
+3) EXPOSE
+   Specifies the ports that need to be opened.
+
+4) WORKDIR
+   Sets the directory to log in to inside the container.
+
+5) ENV
+   Sets environment variables inside the container.
+
+6) ARG
+   Passes arguments to the container.
+
+7) COPY
+   Copies data from the local machine to the container.
+
+8) ADD
+   Similar to COPY, but also extracts compressed files into the container.
+   It can also download data from the internet.
+
+9) RUN
+   Executes commands while creating the image.
+
+10) CMD
+    Executes commands while creating the container.
+    Multiple CMD instructions can be used, but only the last one takes effect.
+
+11) ENTRYPOINT
+    Similar to CMD but has higher priority.
+    A Dockerfile can have only one ENTRYPOINT.
+    The first command executed in the container comes from ENTRYPOINT, 
+    followed by the command in CMD.
+
+=================================
+
+cd /root
+vim Dockerfile
+
+FROM ubuntu
+RUN echo "Hello all" > /file1
+
+==============
+
+To create an image from a Dockerfile
+
+docker build -t custom-imagename path-of-Dockerfile 
+
+docker build -t image1 /root
+
+==============
+
+To create a container from an image
+
+docker run -it imagename
+
+docker run -it image1 
+
+==============
+
+How to push a custom image to Docker Hub
+
+create a Dockerfile
+
+docker build -t account-name/imagename path-of-Dockerfile
+
+docker login
+
+docker push account-name/imagename
+
+============
+
+cd /root
+vim Dockerfile
+
+FROM ubuntu
+WORKDIR /tmp
+RUN echo "Hello all" > /home/file20
+RUN mkdir /dir1
+COPY file60 /dir1
+ADD file5.tar /tmp
+
+=================
+
+FROM ubuntu
+RUN apt-get update -y
+RUN apt-get install tree -y
+RUN apt-get install git -y
+RUN apt-get install apache2 -y
+
+==============
+
+to see whether particular pkg is installed on ubuntu machine or not
+
+apt list --installed pkgname
+
+===============
+
+(To optimize a Dockerfile )
+
+FROM ubuntu
+RUN apt-get update -y && apt-get install tree git apache2 -y
+
+==================
+
+Types of formats to write a Dockerfile
+
+1. shell format / standard format
+
+2. exec format / JSON array format (mainly for ENTRYPOINT and CMD)
+
+======================
+
+1. shell format
+
+FROM ubuntu
+RUN mkdir /dir1
+RUN touch /file1
+
+===================
+
+2. exec format
+
+FROM ubuntu
+RUN [ "mkdir","/dir1" ]
+RUN [ "touch","/file1" ]
+
+=================
+
+docker run -itd ubuntu bash
+
+====================
+
+vim Dockerfile
+
+FROM ubuntu
+CMD ["sh", "-c", "useradd sumit && tail -f /dev/null"]
+
+tail -f /dev/null 
+keeps the container running (otherwise it exits immediately)
+
+docker build -t imagename path-of-Dockerfile
+
+docker run -d --name container-name image-name
+
+docker exec -it container-name bash
+
+==========================
+
+ENTRYPOINT ["sh", "-c", "useradd devops && tail -f /dev/null"]
+
+=========================
+
+Docker Compose
+
+Docker Compose is a tool for defining and running multiple containers.
+
+It uses a YAML file where all the configuration steps are defined.
+
+YAML stands for YAML Ain’t Markup Language (a recursive acronym originally standing for Yet Another Markup Language").
+
+Docker Compose treats each container as a service.
+
+With Docker Compose, we can create and manage multiple containers easily.
+
+Docker Compose configuration is written in YAML format.
+
+YAML files use a key-value format:
+key: value
+
+======================
+
+yum install -y docker 
+
+systemctl start docker
+
+mkdir -p /usr/local/lib/docker/cli-plugins
+
+curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-$(uname -m)" \
+  -o /usr/local/lib/docker/cli-plugins/docker-compose
+
+chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+
+mkdir /root/compose-demo 
+
+cd /root/compose-demo
+
+cat > compose.yaml 
+
+services:
+  one:
+    image: ubuntu:24.04
+    command: tail -f /dev/null
+
+  two:
+    image: centos:centos7
+    command: tail -f /dev/null
+
+===========
+
+To run a Docker Compose file
+docker compose up -d
+
+docker exec -it container_name_or_id bash
+
+docker-compose up servicename
+docker compose up -d one
+docker compose up -d two
+
+===========
+
+cat > compose.yaml 
+
+services:
+  ubuntu-apache:
+    image: ubuntu:22.04
+    container_name: ubuntu_apache_server
+    ports:
+      - "80:80"
+    volumes:
+      - /dir1:/dir2
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
+    command: >
+      bash -lc "apt-get update &&
+                apt-get install -y apache2 &&
+                echo 'ServerName localhost' >> /etc/apache2/apache2.conf &&
+                echo 'hello all' > /var/www/html/index.html &&
+                apachectl -D FOREGROUND"
+
+
+
+
+

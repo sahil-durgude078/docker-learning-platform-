@@ -1,0 +1,91 @@
+Docker Swarm Setup on Amazon Linux 6.1
+
+Manager node
+22, 2377, 7946, 4789
+
+worker nodes
+22, 7946, 4789
+
+22   To connect to Linux machine
+2377 To manage swarm cluster
+7946 node to node communication
+4789 overlay network
+
+===============
+
+Install Docker on ALL Machines
+
+yum install -y docker
+
+systemctl start docker
+
+===============
+
+Initialize the Swarm on the Manager
+docker swarm init --advertise-addr private-ip-of-manager-node
+
+Join workers to the Swarm (on Worker-1 and Worker-2)
+
+To list nodes
+docker node ls
+
+===============
+
+To get the token to add a worker node.
+
+docker swarm join-token worker
+
+===============
+
+To get the token to add a manager node.
+
+docker swarm join-token manager
+
+===============
+
+Create Service Using Ubuntu Image
+
+docker service create --name myapp --replicas 2 --restart-condition any --restart-delay 5s --restart-max-attempts 3 -p 80:80 ubuntu:20.04 sleep infinity
+
+docker service ls
+
+===============
+
+Scaling
+
+docker service scale myapp=3
+
+docker service scale myapp=5
+
+docker service scale myapp=3
+
+===============
+
+Auto-Healing
+
+Remove container:
+
+docker rm -f container-id
+
+===============
+
+Rolling Update
+
+docker service update --image lekharaj/light-theme --update-parallelism 1 --update-delay 10s myapp
+
+docker service update --image lekharaj/dark-theme --update-parallelism 1 --update-delay 10s myapp
+
+===============
+
+Rollback
+
+docker service rollback myapp
+
+===============
+
+To create a new Docker image from a running container and 
+sets it to start Apache in the foreground by default.
+
+docker commit --change='CMD ["apache2ctl","-D","FOREGROUND"]' container-name imagename
+
+
